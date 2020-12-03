@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <!-- mobile responsive meta -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Организация работы в Mercurial</title>
+  <meta name='description' content=''>
+
+  <link rel="canonical" href="/2020/12/03/oganization-of-work-in-mercurial/">
+  <link rel="alternate" type="application/rss+xml" title="Илья Исаев – RnD Java Developer, Преподаватель, Аспирант" href="/feed.xml">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link href="/assets/css/main.css" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+  
+
+  <div class="container-full">
+  <!-- begin header -->
+  <header class="header">
+
+    <div class="logo">
+      <a class="logo__link" href="/">
+      
+        Илья Исаев
+      
+      </a>
+    </div>
+
+    <nav class="main-nav">
+      <span class="main-nav__open">menu</span>
+
+      <div class="main-nav__box">
+        <span class="main-nav__close">Close</span>
+
+        <ul class="nav__list list-reset">
+          <li class="nav__item">
+            <a href="/" class="nav__link">Главная</a>
+          </li>
+          
+            
+          
+            
+          
+          <li class="nav__item">
+            <a href="/about/" class="nav__link">Обо мне</a>
+          </li>
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+        </ul>
+
+      </div>
+
+    </nav>
+
+  </header>
+  <!-- end header -->
+</div>
+
+
+  <!-- begin content -->
+  <main class="content" aria-label="Content">
+    <div class="container">
+  <!-- begin post -->
+  <article class="post">
+    <div class="post__head" data-aos="fade-up" data-aos-easing="ease-out-quad" data-aos-duration="700">
+      <h1 class="post__title">Организация работы в Mercurial</h1>
+      <div class="post__date">
+        <time datetime="2020-12-03T00:00:00+00:00">Опубликована Dec 03, 2020</time>
+      </div>
+      
+      <div class="post-image img-blur" style="background-image: url(/assets/img/37a2fbd322d4f34657010159320e2557.png)"></div>
+      
+    </div>
+
+    <div class="post__content" data-aos="fade-up" data-aos-easing="ease-out-quad" data-aos-delay="100" data-aos-duration="700">
+      <h2 id="введение">Введение</h2>
+
+<p>Mercurial - распределенная кроссплатформенная система управления версиями, разработана для эффективной работы с репозиториями кода, можно использовать для работы с документами.</p>
+
+<p>Основная цель статья это не рассказать про команды, а про то, как эффективно работать в команде с этим полезным инструментом. В силу того, что я довольно часто встречал ситуации, когда люди не умеют пользоваться системами контроля версий, делают странные коммиты, не понимает зачем нужны ветки и почему коммить код надо не раз в месяц. Хотелось бы раскрыть глаза новичкам или даже опытным сеньорам.</p>
+<h2 id="установка">Установка</h2>
+
+<p>Для начала необходимо установить <a href="https://www.mercurial-scm.org">Mercurial</a>. Делается это довольно просто, скачать программу, далее по шагам установить.
+Советую использовать десктопный графический клиент <a href="https://ru.wikipedia.org/wiki/TortoiseHg">TortoiseHg</a>.</p>
+
+<p>После установки проверить, что всё прошло успешно, у меня это выглядит так:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ hg version
+
+$ Распределенная SCM Mercurial (версия 5.2)
+(see https://mercurial-scm.org for more information)
+
+Copyright (C) 2005-2019 Matt Mackall and others
+This is free software; see the source for copying conditions. There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+</code></pre></div></div>
+
+<p>Видно, что установка прошла успешно и установлена версия 5.2.</p>
+
+<h2 id="работа-в-tortoisehg">Работа в TortoiseHg</h2>
+
+<p>Запускаем программу TortoiseHg.</p>
+
+<p>Для начала необходимо склонировать себе репозиторий на свой компьютер, делается это просто. В меню выбираем File -&gt; Clone repository:
+<img src="/assets/img/clone_repository.jpg" alt="" />
+В Source необходимо указать ссылку на репозиторий. Я ставлю ещё галочку (Do not verify host certificate), это специфика моей компании, мне не надо проверять SSL сертификат. Для любознательных, в Hg command можно изучить какой командой вытягивается репозиторий. Далее, необходимо будет ввести логин и пароль.</p>
+
+<p>Подождать, пока какое-то время будет происходить копирование:
+<img src="/assets/img/clone_repository_in_progress.jpg" alt="" /></p>
+
+<p>После копирования, вы увидите примерно следующее:
+<img src="/assets/img/done_clone.jpg" alt="" /></p>
+
+<p>Наверное страшно, что это всё такое?</p>
+
+<p>Разберёмся.</p>
+
+<p>Branch - это ветки, используются почти каждый день, между ними приходится часто прыгать, это наборы разных изменений в проекте. Graph - визуально показывает разными цветами все ветки и пересечения между ними. Description - это сообщение коммита, которое пишет разработчик, фиксируя какое-то либо изменение. Tags - идентификатор набора изменений, иногда удобно помечать некоторые изменения тегами. Rev - номер коммита.</p>
+
+<p>Когда мы склонировали репозиторий, то находимся на дефолтной ветке в проекте, обычно это ветка default, зависит от настроек репозитория. Чтобы узнать на какой ветке находимся. Идём в меню Repository -&gt; Update. В Parent написана текущая ветка, выше список, который позволяет выбрать ветку, которая уже есть и нажатием кнопки update переключиться на последний коммит в выбранной ветке.</p>
+
+<p>Например, я хочу переключиться на ветку dev:
+<img src="/assets/img/to_dev.jpg" alt="" /></p>
+
+<p>Обычно, в компании всегда есть девелоперская ветка (dev), в которой хранятся все изменения в проекте. Также есть ветка мастер (master), в неё обычно <a href="https://hgbook.bacher09.org/html/a-tour-of-mercurial-merging-work.html">сливается</a> код, который уже оттестирован и точно работает.
+Также, довольно часто есть ветки так называемых фичей, в которые размещаются изменения того или иного функционала, добавляемых в проект. Например, ветка feature/name_feature, всегда перед названием фичи рекомендутся добавлять feature, чтобы было понятно, что это ветка новой фичи.
+Ещё есть ветки багфиксов, это когда исправляется какая-та ошибка и делается это обычно в отдельной ветке, рекомендуемые названия bugfix/name_change.
+Дальше, когда фича или багфикс полностью реализован и протестирован, дальше нужно сливать в dev ветку, где проводится регресионное тестирование всей системы, чтоб убедиться, что ваше чудесное изменение не сломало весь проект.</p>
+
+<p>И, когда мы уверены, что всё хорошо, команда решила или кто-то сверху, добавляют такую-то фичу в новую версию продукта и/или исправления каких-то багов, то в тот момент времени сливается ветка dev в ветку master, вся команда молится во в главе с отделом <a href="https://ru.wikipedia.org/wiki/Обеспечение_качества">QA</a>, что ничего не сломалось, ибо в master лежит продакшн код.</p>
+<h3 id="коммиты">Коммиты</h3>
+<p>Допустим, мы добавили нужный функционал, как же правильно его разместить в удалённый репозиторий?</p>
+
+<p>Для начало нужно выбрать файлы, которые мы добавили, отредактировали или удалили, выбрать нужные галочками. Файлы помечаются разными типами, обычно используются три:</p>
+<ul>
+  <li>M - модификация файла;</li>
+  <li>А - добавление нового файла;</li>
+  <li>R - удаление файла.</li>
+</ul>
+
+<p>Ещё есть файлы игнора, которые не надо отправлять в репозиторий, чтобы его на засорять, например, это какие-то настройки среды разработки. В репозиторий, отправляются только <em>*исходники</em>.</p>
+
+<p>Далее, нам нужно создать новую ветку, раз мы добавили фичу. Жмём на название самой фичи:
+<img src="/assets/img/click_branch.jpg" alt="" />
+Вводим новое название и нажимаем ОК:</p>
+<div style="text-align:center"><img src="/assets/img/new-branch.jpg" width="80%" text-align="center" /></div>
+<p><br />
+Теперь необходимо написать сообщение в коммиту, сообщения принято писать на английском языке, чтоб было любому понятно что это такое и также не было проблем с кодировкой. Сообщение необходимо писать кратко и в тоже время это не целая поэма, вообщем лаконично.
+Надо понимать, что ваше сообщение потом будет читать другой разработчик и сложно разобраться когда подряд делается несколько коммитов с одинаковым сообщением. Вообще, чтение чужого кода и коммитов занимает довольную большую часть времени.</p>
+
+<p>Супер, дальше нажимаем Commit, вылезит окошко, жмём Create Branch:
+<img src="/assets/img/new-commit.jpg" alt="" />
+Отлично, мы зафиксировали изменение кода локально, теперь нужно отправить изменения в удалённый репозиторий, для это надо нажать кнопку push, найти её можно в меню Repository -&gt; Synchronize -&gt; Push.
+Далее, подтвердите что хотите запушить. Также, меркуриал вас спросит, уверены ли вы, что хотите создать в удалённом репозитории ветку, жмите да.
+Должно получится, что-то вроде такого:
+<img src="/assets/img/push.jpg" alt="" />
+Некоторые рекомендации по коммитам, не нужно лепить пачку изменений сразу в один коммит, создавайте на каждое изменение отдельный коммит. Во-первых, жирный коммит не очень читабельный и сложно описать сообщением.
+Во-вторых, бывает часто нужно вернуться на старую версию, когда все сломалось, а такое бывает не очень редко, Team Lead/Senior/да и в принципе любой разработчик будет в гневе, если вы лепите всё в один коммит.
+И, чтобы пол года не разбираться на чём именно у нас тут все легло, откатывают весь ваш коммит, а допустим он включает сразу 3 фичи, но сломалась одна фича. Логично, что это не очень удобно.
+А 2 другие фичи могли принести деньги компании, которые не включились в сборку вот именно сейчас.</p>
+<div style="text-align:center"><img src="/assets/img/mem_commit.jpg" /></div>
+<p><br />
+Другая сторона, нужно коммить хотя бы раз в три дня или в неделю, за этот срок возможно сделать что-то по задачам, если вы работаете спринтами, а хранить код на своей машине не очень безопасно, у меня были случаи когда машина ломалась.
+Если вы завершили работу на какой-то задачей, сделайте коммит, не надо стесняться, плохой подход, когда вы делаете это раз в месяц и тогда встаёт вопрос, что вы делали целый месяц? Пили кофе?</p>
+
+<p>Допустим, всё прошло успешно, ваша фича проверена, необходимо её слить в ветку dev.</p>
+
+<p>Для этого нужно обновиться до ветки dev, в которую мы хотим слить нашу фичу. Далее, жмем правой кнопкой мыши на коммит, который нам нужно слить в dev и выбираем Merge with Local:</p>
+<div style="text-align:center"><img src="/assets/img/merge_with_local.jpg" width="80%" text-align="center" /></div>
+<p><br />
+Если вы в себе уверены, поставьте вторую галочку, это позволит автоматически разрешить все изменения между ветками (если вы начинающий разработчик, то советую обратиться в старшему разработчику и сделать это под его присмотром):
+<img src="/assets/img/merge.jpg" alt="" />
+Я поставил галочку на предыдущем шаге и нажал далее, далее можно поставить галочку, чтобы сразу сделать коммит, у меня все прошло успешно, конфликтов нет, но такое в реальных проектах редкость, особенно если большая команда разработчиков:
+<img src="/assets/img/merge_done.jpg" alt="" />
+Сообщение обычно ставится автоматом такого плана Merge with name_branch, жмем Commit Now:
+<img src="/assets/img/merge_and_commit_now.jpg" alt="" />
+Поздравляю, мы замёржили (выше я писал сливаем, чтобы вас сразу не пугать, теперь вы знаете что это значит merge) две ветки, это успех, жмём Done:
+<img src="/assets/img/merge_done_full.jpg" alt="" />
+Теперь, по той же схеме, что ранее, нужно сделать push, чтобы это все отразилось на удалённом репозитории.
+Идём в меню Repository -&gt; Synchronize -&gt; Push. Наблюдаем, что наше ответление в графе вернулось в dev:
+<img src="/assets/img/graph.jpg" alt="" />
+По такой же схеме мёржатся любые ветки.</p>
+<h3 id="откатить">Откатить</h3>
+<p>Что делать если вдруг ваш коммит всё сломал или вы вообще по ошибке сделали пуш?</p>
+
+<p>Выход есть, для этого есть удобная команда backout, она позволяет автоматически отменить всю ревизию и создать новую ревизию, которая отражает состояние репозитория без уже ошибочной ревизии.</p>
+
+<p>Жмём правой кнопки мыши на коммит, который мы хотим убрать и выбираем Backout:</p>
+<div style="text-align:center"><img src="/assets/img/backout_click.jpg" width="80%" text-align="center" /></div>
+<p><br />
+Далее, открывается окошко где написано что убираем и какая у нас сейчас локальная ревизия, жмём далее (как обычно ставим галочку, у нас тут всё просто и автоматом разрешится):
+<img src="/assets/img/backout_progress.jpg" alt="" />
+Делаем коммит:
+<img src="/assets/img/backout_commit.jpg" alt="" />
+Видим, что все успешно, нажимаем Done:
+<img src="/assets/img/backout_done.jpg" alt="" />
+Не забываем, что надо ещё сделать пуш. В меню Repository -&gt; Synchronize -&gt; Push. Иначе изменения не отразятся в удалённом репозитории.</p>
+
+<h3 id="закрыть-ветку">Закрыть ветку</h3>
+
+<p>Бывают ситуации, когда кто-то ошибочно создал кучу веток или создал несколько головок одной ветки.
+Головка это по сути несколько веток с одним названием, да, это не git, здесь так можно сделать и надо очень внимательно все делать. Это происходит часто, когда человек делает пуш, но перед этим не смотрит есть ли в удалённом репозитории какие-то изменения, то есть не делает pull.
+Узнать сколько головок имеет одна ветка можно командой:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$hg heads name_branch
+</code></pre></div></div>
+<p>Для закрытия ветки есть варианты, например, merge и это считается лучшим вариантом.
+Но, когда мы понимаем, что ветка точно не нужна и нам надо её убить. Находимся в нужной ветке, которую нам надо закрыть, жмём на её название и выбираем пункт Close current branch:</p>
+<div style="text-align:center"><img src="/assets/img/close_branch.jpg" width="80%" text-align="center" /></div>
+<p><br />
+Дальше коммит и как обычно пуш.
+<img src="/assets/img/close_branch_commit.jpg" alt="" /></p>
+
+<p>На этом всё, этих знаний должно хватить на первое время, если будут сложности, то смотрите эту <a href="https://hgbook.bacher09.org/html/how-did-we-get-here.html">документацию</a>.</p>
+
+<hr />
+
+    </div>
+
+    
+    <div class="post-tags">
+      
+      <a href="/tag/Mercurial" class="post-tags__tag">Mercurial</a>
+      
+    </div>
+    
+
+    <div class="post__share">
+      <ul class="share__list list-reset">
+        <li class="share__item">
+          <a class="share__link share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2020/12/03/oganization-of-work-in-mercurial/"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook" rel="nofollow">
+              <svg enable-background="new 0 0 56.693 56.693" height="56.693" viewBox="0 0 56.693 56.693" width="56.693" xmlns="http://www.w3.org/2000/svg"><path d="m40.43 21.739h-7.645v-5.014c0-1.883 1.248-2.322 2.127-2.322h5.395v-8.278l-7.43-.029c-8.248 0-10.125 6.174-10.125 10.125v5.518h-4.77v8.53h4.77v24.137h10.033s0-13.32 0-24.137h6.77z"/></svg>
+            </a>
+        </li>
+
+        <li class="share__item">
+          <a class="share__link share__twitter" href="https://twitter.com/intent/tweet?text=%D0%9E%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D0%B2%20Mercurial&url=/2020/12/03/oganization-of-work-in-mercurial/"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter" rel="nofollow">
+              <svg enable-background="new 0 0 56.693 56.693" height="56.693" viewBox="0 0 56.693 56.693" width="56.693" xmlns="http://www.w3.org/2000/svg"><path d="m52.837 15.065c-1.811.805-3.76 1.348-5.805 1.591 2.088-1.25 3.689-3.23 4.444-5.592-1.953 1.159-4.115 2-6.418 2.454-1.843-1.964-4.47-3.192-7.377-3.192-5.581 0-10.106 4.525-10.106 10.107 0 .791.089 1.562.262 2.303-8.4-.422-15.848-4.445-20.833-10.56-.87 1.492-1.368 3.228-1.368 5.082 0 3.506 1.784 6.6 4.496 8.412-1.656-.053-3.215-.508-4.578-1.265-.001.042-.001.085-.001.128 0 4.896 3.484 8.98 8.108 9.91-.848.23-1.741.354-2.663.354-.652 0-1.285-.063-1.902-.182 1.287 4.015 5.019 6.938 9.441 7.019-3.459 2.711-7.816 4.327-12.552 4.327-.815 0-1.62-.048-2.411-.142 4.474 2.869 9.786 4.541 15.493 4.541 18.591 0 28.756-15.4 28.756-28.756 0-.438-.009-.875-.028-1.309 1.974-1.422 3.688-3.203 5.042-5.23z"/></svg>
+            </a>
+        </li>
+
+        <li class="share__item">
+          <a class="share__link share__pinterest" href="http://pinterest.com/pin/create/button/?url=/2020/12/03/oganization-of-work-in-mercurial/&amp;media=/assets/img/37a2fbd322d4f34657010159320e2557.png&amp;description=%D0%9E%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D0%B2%20Mercurial"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Pinterest" rel="nofollow">
+              <svg enable-background="new 0 0 56.693 56.693" height="56.693" viewBox="0 0 56.693 56.693" width="56.693" xmlns="http://www.w3.org/2000/svg"><path d="m28.348 5.158c-13.599 0-24.625 11.023-24.625 24.625 0 10.082 6.063 18.744 14.739 22.553-.069-1.721-.012-3.783.429-5.654.473-2 3.168-13.418 3.168-13.418s-.787-1.572-.787-3.896c0-3.648 2.115-6.373 4.749-6.373 2.24 0 3.322 1.682 3.322 3.695 0 2.252-1.437 5.619-2.175 8.738-.616 2.613 1.31 4.744 3.887 4.744 4.665 0 7.808-5.992 7.808-13.092 0-5.397-3.635-9.437-10.246-9.437-7.47 0-12.123 5.57-12.123 11.792 0 2.146.633 3.658 1.624 4.83.455.537.519.754.354 1.371-.118.453-.389 1.545-.501 1.977-.164.625-.669.848-1.233.617-3.44-1.404-5.043-5.172-5.043-9.408 0-6.994 5.899-15.382 17.599-15.382 9.4 0 15.588 6.804 15.588 14.107 0 9.658-5.369 16.875-13.285 16.875-2.659 0-5.16-1.438-6.016-3.068 0 0-1.43 5.674-1.732 6.768-.522 1.9-1.545 3.797-2.479 5.275 2.215.654 4.554 1.01 6.979 1.01 13.598 0 24.623-11.023 24.623-24.623-.001-13.603-11.027-24.626-24.624-24.626z"/></svg>
+            </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="post__navigation">
+      
+
+      
+    </div>
+
+    
+      <div class="show-comments">
+    <button class="disqus-button" id="show-comments-button" onclick="disqus();return false;">Оставить свой комментарий</button>
+</div>
+
+<div id="disqus_thread"></div>
+
+<script>
+var disqus_loaded = false;
+var disqus_shortname = 'mr-brown'; // Add your shortname here
+function disqus() {
+  if (!disqus_loaded)  {
+      disqus_loaded = true;
+      var e = document.createElement("script");
+      e.type = "text/javascript";
+      e.async = true;
+      e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+      (document.getElementsByTagName("head")[0] ||
+      document.getElementsByTagName("body")[0])
+      .appendChild(e);
+      // Hide the button after opening
+      document.getElementById("show-comments-button").style.display = "none";
+  }
+}
+</script>
+<noscript>Please enable JavaScript to view the
+  <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+
+    
+
+  </article>
+  <!-- end post -->
+</div>
+
+  </main>
+  <!-- end content -->
+
+  <div class="container">
+  <!-- begin footer -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="contact">
+        <div class="contact__title">Вопрос по работе или что-то ещё? <a href="mailto:leomag.isaev@gmail.com">Email me</a>.</div>
+        <ul class="contact__list list-reset">
+          
+          <li class="contact__item">
+            <a class="contact__link" href="https://twitter.com/onkel_frank">Twitter</a>
+          </li>
+          
+          <li class="contact__item">
+            <a class="contact__link" href="https://facebook.com/isaev.ilya">Facebook</a>
+          </li>
+          
+          <li class="contact__item">
+            <a class="contact__link" href="https://instagram.com/ilya_berlin">Instagram</a>
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </footer>
+  <!-- end footer -->
+</div>
+
+
+  <!-- begin js -->
+  <script src="/assets/js/vendors/jquery-3.3.1.min.js"></script>
+  <script src="/assets/js/vendors/aos.js"></script>
+  <script src="/assets/js/vendors/jquery.fitvids.js"></script>
+  <script src="/assets/js/common.js"></script>
+  <!-- end js -->
+</body>
+
+</html>
