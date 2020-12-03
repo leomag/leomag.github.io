@@ -1,27 +1,27 @@
-title: Ilia Isaev – RnD Java Developer, Teacher, PhD Student
+title: Илья Исаев – RnD Java Developer, Преподаватель, Аспирант
 logo:  # you can add own logo.
-description: Passionate designer curating designs for new startups  and  founders  and crafts  beautiful user interfaces with love.
+description: #Passionate designer curating designs for new startups  and  founders  and crafts  beautiful user interfaces with love.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
 
 # Author Settings
 author:
-  name: Ilia Isaev
+  name: Илья Исаев
   image: '/assets/img/01.jpg'
   job: RnD Java Developer
-  bio: Passionate designer curating designs for new startups  and  founders  and crafts  beautiful user interfaces with love.
-  email: forexample@website.com
+  bio: Преподаю в Университете ИТМО, разрабатываю высоконагруженные телекоммуникационные решения.
+  email: leomag.isaev@gmail.com
 
 
 # Contact links
 contact:
   - name: Twitter
-    link: https://twitter.com/
+    link: https://twitter.com/onkel_frank
   - name: Facebook
-    link: https://facebook.com/
+    link: https://facebook.com/isaev.ilya
   - name: Instagram
-    link: https://instagram.com/
+    link: https://instagram.com/ilya_berlin
 
 
 # Comment Section (Disqus)
